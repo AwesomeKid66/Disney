@@ -135,7 +135,7 @@ def value_check(string) -> bool:
   if string == None: return False
 
   # checks if there is a dollar sign, has a decimal pattern, or a multiple pattern each of with are automatically money
-  if dollar_sign.search(string) or decimal_pattern.search(string) or multiple_pattern.search(string):
+  if dollar_sign.search(string) or decimal_pattern.search(string) or multiple_pattern.search(string) or glass_bottle_pattern.search(string):
     return True
   
   # This is where we check for other numbers that are not money values so we can return False. 
@@ -178,8 +178,8 @@ def process_string(input_string):
                        input_string,
                        re.IGNORECASE)
   if match:
-    glass_price = match.group(1)
-    bottle_price = match.group(2)
+    glass_price = int(match.group(1))
+    bottle_price = int(match.group(2))
     return [glass_price, bottle_price]
     
   # Remove the word 'beverage' or 'beverages' (case-insensitive)
@@ -201,7 +201,7 @@ def process_string(input_string):
   result = '-'.join(numbers)
   
   # Return the processed string
-  return result
+  return int(result)
 
 def user_Input(menu, i) -> str:
   """
@@ -253,4 +253,4 @@ def glass_bottle_row_duplicate(menu, i, cellA_value, result) -> None:
   menu[f'I{i+2}'] = menu[f'I{i+1}'].value
   menu[f'J{i+2}'] = menu[f'J{i+1}'].value
   menu[f'K{i+2}'] = menu[f'K{i+1}'].value
-  menu[f'L{i+2}'] = menu[f'J{i+1}'].value
+  menu[f'L{i+2}'] = menu[f'L{i+1}'].value
