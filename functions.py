@@ -182,17 +182,15 @@ def process_string(input_string):
   # Draft - $8.75 - $10.50, Bottle/Can - $8.50 - $12.75
   
   # Search for the pattern 'Draft' followed by a number with optional decimal places, then 'Bottle/Can' followed by a number with optional decimal places
-  match = re.search(r'Draft\s*-?/s*(\d+(?:\.\d+)?)\s*\|\s*Bottle/Can\s*-?\s*(\d+(?:\.\d+)?)',
-                       input_string,
-                       re.IGNORECASE)
-  print(f'The match is: {match}')
+  match = re.search(r'Draft\s*-\s*\d+\.\d{2}\s*-\s*\d+\.\d{2}\s*,\s*Bottle/Can\s*-\s*\d+\.\d{2}\s*-\s*\d+\.\d{2}',
+              input_string,
+              re.IGNORECASE)
   if match:
-    print(match.group(1))
-    print(match.group(2))
-    print(match.group(3)) 
-    print(match.group(4))
-    draft_price = float(match.group(1))
-    bottle_can_price = float(match.group(2))
+    groups = match.group().split(',')
+    first = re.sub(r'\s*draft\s*-\s*', '', groups[0], flags=re.IGNORECASE)
+    draft_price = re.sub(r' ', '', first, flags=re.IGNORECASE)
+    second = re.sub(r'\s*Bottle/Can\s*-\s*', '', groups[1], flags=re.IGNORECASE)
+    bottle_can_price = re.sub(r' ', '', second, flags=re.IGNORECASE)
     return [draft_price, bottle_can_price]
     
   # Remove the word 'beverage' or 'beverages' (case-insensitive)
@@ -268,6 +266,33 @@ def glass_bottle_row_duplicate(menu, i, cellA_value, result) -> None:
   menu[f'L{i+1}'] = f'Mod: J'
   menu.insert_rows(i+2)
   menu[f'A{i+2}'] = cellA_value + f' - Bottle'
+  menu[f'B{i+2}'] = result[1]
+  menu[f'C{i+2}'] = menu[f'C{i+1}'].value
+  menu[f'D{i+2}'] = menu[f'D{i+1}'].value
+  menu[f'E{i+2}'] = menu[f'E{i+1}'].value
+  menu[f'F{i+2}'] = menu[f'F{i+1}'].value
+  menu[f'G{i+2}'] = menu[f'G{i+1}'].value
+  menu[f'H{i+2}'] = menu[f'H{i+1}'].value
+  menu[f'I{i+2}'] = menu[f'I{i+1}'].value
+  menu[f'J{i+2}'] = menu[f'J{i+1}'].value
+  menu[f'K{i+2}'] = menu[f'K{i+1}'].value
+  menu[f'L{i+2}'] = menu[f'L{i+1}'].value
+
+def draft_bottle_can_row_duplicate(menu, i, cellA_value, result) -> None:
+  """
+  Creates two lines for the glass and bottle prices.
+  
+  Parameters:
+  menu (Worksheet): The worksheet containing the menu data.
+  i (int): The row currently in the sheet.
+  cellA_value (str): Contents of the original value in cellA
+  result (list): The list of glass and bottle prices
+  """
+  menu[f'A{i+1}'] = cellA_value + f' - Draft'
+  menu[f'B{i+1}'] = result[0]
+  menu[f'L{i+1}'] = f'Mod: D'
+  menu.insert_rows(i+2)
+  menu[f'A{i+2}'] = cellA_value + f' - Bottle/Can'
   menu[f'B{i+2}'] = result[1]
   menu[f'C{i+2}'] = menu[f'C{i+1}'].value
   menu[f'D{i+2}'] = menu[f'D{i+1}'].value
