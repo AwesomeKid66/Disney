@@ -1,13 +1,14 @@
 # Things to Fix & Observations
 ## 6/6/24, Johnny
 ### Mod: J Notes
-- Space 220 Kids lunch and dinner beverages price is listed at 220
-- If Row J contains both 'Glass' and 'Bottle' price options, can we create 1 row for each; dupliate row, add ", Glass" to row A of first, ", Bottle" to row A of second, then put the price of each in Row B
-- Splitsville 'Top it off' add ons took the wrong number, the Grain 153 and listed that as price
 - The descriptions, Row J, that have multiple numbers are really messing with this a lot, can we just create duplicate rows for each, put the price in Row B, append the text to Row A and see how that complicates things? Some will be worse, but most may be better; will be tricky when they have numbers as part of description, e.g. 1/2-oz 90.50
+- The Fountain, row A has Small/Large Prices, again duplicating and splitting would be great way to make it work
+
+- If Row J contains both 'Glass' and 'Bottle' price options, can we create 1 row for each; dupliate row, add ", Glass" to row A of first, ", Bottle" to row A of second, then put the price of each in Row B
+- Space 220 Kids lunch and dinner beverages price is listed at 220
+- Splitsville 'Top it off' add ons took the wrong number, the Grain 153 and listed that as price
 - Space 220 8oz filet will cause issues with above suggestion
 - California Grill, row A has price, but it pulls it from row J; it is correct, but would like to change row A name to "Adult Meal" or something after price is pulled
-- The Fountain, row A has Small/Large Prices, again duplicating and splitting would be great way to make it work
 - 4 Rivers Cantina Barbacoa Food Truck, Tri-Tip Steak has price changed to its add-on?
 
 ### Mod: D Notes
@@ -20,3 +21,17 @@
 - Biggest fix is removing the price after it is put in row B and updating Name to match the meal
 - Again, no ideas for price ranges, so no worries there
 - A few rows; Via Napoli, The Fountain, etc; have multiple prices, but not ranges, would be great to split those if possible;
+
+
+Completed:
+### Mod: J Notes
+- If Row J contains both 'Glass' and 'Bottle' price options, can we create 1 row for each; dupliate row, add ", Glass" to row A of first, ", Bottle" to row A of second, then put the price of each in Row B
+- Space 220 Kids lunch and dinner beverages price is listed at 220
+- Splitsville 'Top it off' add ons took the wrong number, the Grain 153 and listed that as price
+- 4 Rivers Cantina Barbacoa Food Truck, Tri-Tip Steak has price changed to its add-on?
+
+Did not finish for now:
+### Mod: J Notes
+- Space 220 8oz filet will cause issues with above suggestion
+- California Grill, row A has price, but it pulls it from row J; it is correct, but would like to change row A name to "Adult Meal" or something after price is pulled
+

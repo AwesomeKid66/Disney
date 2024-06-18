@@ -67,7 +67,7 @@ def prepare_excel_sheets() -> Workbook:
   # returns menu
   return menu
 
-def load_sheets(path) -> (Workbook, Workbook):
+def load_sheets(path):
   """
   Takes the path to the copied workbook, and returns a new workbook that will be saved somewhere else
   along with a the menu that will be modified
@@ -79,9 +79,6 @@ def load_sheets(path) -> (Workbook, Workbook):
   menu (Worksheet): The menu that will be modified
   new_wb (Workbook): The entire workbook that is modified
   """
-  # set the sheet names of the workbook
-  sheet1 = 'Restaurant List'
-  sheet2 = 'Menus'
 
   # workbook object is created
   new_wb = load_workbook(path)
@@ -181,6 +178,22 @@ def process_string(input_string):
     glass_price = int(match.group(1))
     bottle_price = int(match.group(2))
     return [glass_price, bottle_price]
+  
+  # Draft - $8.75 - $10.50, Bottle/Can - $8.50 - $12.75
+  
+  # Search for the pattern 'Draft' followed by a number with optional decimal places, then 'Bottle/Can' followed by a number with optional decimal places
+  match = re.search(r'Draft\s*-?/s*(\d+(?:\.\d+)?)\s*\|\s*Bottle/Can\s*-?\s*(\d+(?:\.\d+)?)',
+                       input_string,
+                       re.IGNORECASE)
+  print(f'The match is: {match}')
+  if match:
+    print(match.group(1))
+    print(match.group(2))
+    print(match.group(3)) 
+    print(match.group(4))
+    draft_price = float(match.group(1))
+    bottle_can_price = float(match.group(2))
+    return [draft_price, bottle_can_price]
     
   # Remove the word 'beverage' or 'beverages' (case-insensitive)
   string = re.sub(r'beverages?', '', string, flags=re.IGNORECASE)
@@ -194,12 +207,24 @@ def process_string(input_string):
   # Remove any pattern of a word followed by a 4-digit number followed by a word
   string = re.sub(r'[a-zA-Z]+\s*\d{4}\s*[a-zA-Z]+', '', string)
 
+  # Remove the pattern 'space' followed by a number
+  string = re.sub(r'space\s*\d+', '', string, flags=re.IGNORECASE)
+
+  # Remove the pattern numbers followed by 'grain'
+  string = re.sub(r'\d+\s*grain', '', string, flags=re.IGNORECASE)
+
+  # Remove the pattern 'add' followed by a number
+  string = re.sub(r'add\s*\d+', '', string, flags=re.IGNORECASE)
+
   # Extract numbers with optional decimal places and hyphen if necessary
   numbers = re.findall(r'\d+(?:\.\d+)?-?\d+(?:\.\d+)?', string)
 
   # Join the numbers into a single string separated by hyphens
   result = '-'.join(numbers)
   
+  if result == '':
+    return None
+
   # Return the processed string
   return int(result)
 
