@@ -175,8 +175,8 @@ def process_string(input_string):
                        input_string,
                        re.IGNORECASE)
   if match:
-    glass_price = int(match.group(1))
-    bottle_price = int(match.group(2))
+    glass_price = float(match.group(1))
+    bottle_price = float(match.group(2))
     return [glass_price, bottle_price]
   
   # Draft - $8.75 - $10.50, Bottle/Can - $8.50 - $12.75
@@ -188,9 +188,9 @@ def process_string(input_string):
   if match:
     groups = match.group().split(',')
     first = re.sub(r'\s*draft\s*-\s*', '', groups[0], flags=re.IGNORECASE)
-    draft_price = re.sub(r' ', '', first, flags=re.IGNORECASE)
+    draft_price = float(re.sub(r' ', '', first, flags=re.IGNORECASE))
     second = re.sub(r'\s*Bottle/Can\s*-\s*', '', groups[1], flags=re.IGNORECASE)
-    bottle_can_price = re.sub(r' ', '', second, flags=re.IGNORECASE)
+    bottle_can_price = float(re.sub(r' ', '', second, flags=re.IGNORECASE))
     return [draft_price, bottle_can_price]
     
   # Remove the word 'beverage' or 'beverages' (case-insensitive)
@@ -224,7 +224,7 @@ def process_string(input_string):
     return None
 
   # Return the processed string
-  return int(result)
+  return result
 
 def user_Input(menu, i) -> str:
   """
@@ -262,11 +262,12 @@ def glass_bottle_row_duplicate(menu, i, cellA_value, result) -> None:
   result (list): The list of glass and bottle prices
   """
   menu[f'A{i+1}'] = cellA_value + f' - Glass'
-  menu[f'B{i+1}'] = result[0]
+  menu[f'B{i+1}'] = float(result[0])
   menu[f'L{i+1}'] = f'Mod: J'
+  menu[f'J{i+1}'] = ''
   menu.insert_rows(i+2)
   menu[f'A{i+2}'] = cellA_value + f' - Bottle'
-  menu[f'B{i+2}'] = result[1]
+  menu[f'B{i+2}'] = float(result[1])
   menu[f'C{i+2}'] = menu[f'C{i+1}'].value
   menu[f'D{i+2}'] = menu[f'D{i+1}'].value
   menu[f'E{i+2}'] = menu[f'E{i+1}'].value
@@ -274,7 +275,6 @@ def glass_bottle_row_duplicate(menu, i, cellA_value, result) -> None:
   menu[f'G{i+2}'] = menu[f'G{i+1}'].value
   menu[f'H{i+2}'] = menu[f'H{i+1}'].value
   menu[f'I{i+2}'] = menu[f'I{i+1}'].value
-  menu[f'J{i+2}'] = menu[f'J{i+1}'].value
   menu[f'K{i+2}'] = menu[f'K{i+1}'].value
   menu[f'L{i+2}'] = menu[f'L{i+1}'].value
 
@@ -289,11 +289,12 @@ def draft_bottle_can_row_duplicate(menu, i, cellA_value, result) -> None:
   result (list): The list of glass and bottle prices
   """
   menu[f'A{i+1}'] = cellA_value + f' - Draft'
-  menu[f'B{i+1}'] = result[0]
+  menu[f'B{i+1}'] = float(result[0])
   menu[f'L{i+1}'] = f'Mod: D'
+  menu[f'J{i+1}'] = ''
   menu.insert_rows(i+2)
   menu[f'A{i+2}'] = cellA_value + f' - Bottle/Can'
-  menu[f'B{i+2}'] = result[1]
+  menu[f'B{i+2}'] = float(result[1])
   menu[f'C{i+2}'] = menu[f'C{i+1}'].value
   menu[f'D{i+2}'] = menu[f'D{i+1}'].value
   menu[f'E{i+2}'] = menu[f'E{i+1}'].value
@@ -301,6 +302,5 @@ def draft_bottle_can_row_duplicate(menu, i, cellA_value, result) -> None:
   menu[f'G{i+2}'] = menu[f'G{i+1}'].value
   menu[f'H{i+2}'] = menu[f'H{i+1}'].value
   menu[f'I{i+2}'] = menu[f'I{i+1}'].value
-  menu[f'J{i+2}'] = menu[f'J{i+1}'].value
   menu[f'K{i+2}'] = menu[f'K{i+1}'].value
   menu[f'L{i+2}'] = menu[f'L{i+1}'].value
